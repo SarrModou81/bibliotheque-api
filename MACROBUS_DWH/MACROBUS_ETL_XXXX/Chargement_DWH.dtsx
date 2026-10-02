@@ -1,0 +1,270 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/02/2026 08:00:00"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MACROBUS"
+  DTS:CreatorName="MACROBUS\Groupe"
+  DTS:Description="Chargement du DWH MACROBUS_DWH_XXXX : dimensions (niveau 1 puis flocon) puis table de fait"
+  DTS:DTSID="{BD29923D-DC31-42E3-B5D3-88C847534870}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1036"
+  DTS:ObjectName="Chargement_DWH"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{63C68BFB-BBBC-443F-8126-B1D3DA0E5992}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_DWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+      DTS:ObjectName="CM_DWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=MACROBUS_DWH_XXXX;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=MACROBUS_ETL_XXXX;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SEQ Dimensions niveau 1"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Dimensions sans dimension parente (chargées en parallèle)"
+      DTS:DTSID="{7F8EECCE-8EDF-4B74-BECB-594F8B2C33BF}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ Dimensions niveau 1">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 1\SQL Charger DimProductLine"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimProductLine depuis MACROBUS_PROD"
+          DTS:DTSID="{5A6E01A1-0D78-49FE-ADA9-B443B24DF86B}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimProductLine"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimProductLine;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 1\SQL Charger DimFournisseur"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimFournisseur depuis MACROBUS_PROD"
+          DTS:DTSID="{9108B934-8B52-4C4C-B785-0B5C44B846C9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimFournisseur"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimFournisseur;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 1\SQL Charger DimContact"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimContact depuis MACROBUS_PROD"
+          DTS:DTSID="{6EAB64D6-6BB9-4F49-8F65-779C9A59B2F0}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimContact"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimContact;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 1\SQL Charger DimOffice"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimOffice depuis MACROBUS_PROD"
+          DTS:DTSID="{0B1C0969-9B78-4AB6-86F2-C1AB535E8D06}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimOffice"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimOffice;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 1\SQL Charger DimCommerciaux"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimCommerciaux depuis MACROBUS_PROD"
+          DTS:DTSID="{C6B00F7D-AA15-425D-A37F-46780AD5B02F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimCommerciaux"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimCommerciaux;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 1\SQL Charger DimManagers"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimManagers depuis MACROBUS_PROD"
+          DTS:DTSID="{A3712DC7-C9B5-43A2-8A68-5D7DE1B49323}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimManagers"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimManagers;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 1\SQL Charger DimGeographieOffice"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimGeographieOffice depuis MACROBUS_PROD"
+          DTS:DTSID="{6E72061D-27AD-46E5-AC4C-2A547B492338}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimGeographieOffice"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimGeographieOffice;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 1\SQL Charger DimGeographieClient"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimGeographieClient depuis MACROBUS_PROD"
+          DTS:DTSID="{43DC5EA6-342B-4604-9A66-E8C0B673D204}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimGeographieClient"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimGeographieClient;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ Dimensions niveau 2 flocon"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Dimensions du flocon : ont besoin de la clé de leur dimension parente"
+      DTS:DTSID="{265C0621-2A6C-41B2-B2BD-A6E845E2E029}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ Dimensions niveau 2 flocon">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 2 flocon\SQL Charger DimProduct"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimProduct depuis MACROBUS_PROD"
+          DTS:DTSID="{DD5C6AA3-EA32-402C-BE4D-F984F54116CB}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimProduct"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimProduct;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 2 flocon\SQL Charger DimCustomers"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimCustomers depuis MACROBUS_PROD"
+          DTS:DTSID="{3E3DA06F-0D7F-49EB-81CD-2923D487FBD3}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimCustomers"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimCustomers;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Dimensions niveau 2 flocon\SQL Charger DimEmployees"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Charge DimEmployees depuis MACROBUS_PROD"
+          DTS:DTSID="{2700ABBC-CCFB-4C2B-AC1E-B6386EC34BE8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Charger DimEmployees"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+              SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerDimEmployees;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+        <DTS:Executable
+        DTS:refId="Package\SQL Charger FaitOrders"
+        DTS:CreationName="Microsoft.ExecuteSQLTask"
+        DTS:Description="Procédure stockée de chargement incrémental de FaitOrders"
+        DTS:DTSID="{AC4A5383-3468-4EA1-9D8D-A6F0896139CE}"
+        DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+        DTS:LocaleID="-1"
+        DTS:ObjectName="SQL Charger FaitOrders"
+        DTS:ThreadHint="0">
+        <DTS:Variables />
+        <DTS:ObjectData>
+          <SQLTask:SqlTaskData
+            SQLTask:Connection="{13A7D0A8-4954-43B3-8C46-A7CE17FA9100}"
+            SQLTask:SqlStatementSource="EXEC dbo.ps_ChargerFaitOrders;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+        </DTS:ObjectData>
+      </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{EA64F421-89C1-445F-B313-0B08E725539C}"
+      DTS:From="Package\SEQ Dimensions niveau 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SEQ Dimensions niveau 2 flocon" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{581A08E2-893C-48D9-B3C0-9190352B727F}"
+      DTS:From="Package\SEQ Dimensions niveau 2 flocon"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SQL Charger FaitOrders" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

@@ -10,19 +10,25 @@ MACROBUS_DWH/
 │   ├── 04_ps_chargement_FaitOrders.sql        ← procédure stockée du fait (question A-3)
 │   ├── 05_requetes_base_production.sql        ← questions B-1 sur la production
 │   └── 06_requetes_DWH.sql                    ← questions B-1 sur le DWH
+├── MACROBUS_ETL_XXXX/
+│   ├── Chargement_DWH.dtsx                    ← package SSIS (livrable 1)
+│   └── LISEZMOI.md
 └── docs/
     ├── 01_INSTALLATION_VisualStudio_SSMS_SSIS.md
     ├── 02_GUIDE_SSIS.md
     ├── 03_GUIDE_POWER_BI.md
-    └── RAPPORT_PROJET_MACROBUS.md
+    ├── RAPPORT_PROJET_MACROBUS.md / .docx     ← rapport (livrable 4)
+    ├── MEMBRES_DU_GROUPE.md / .docx           ← livrable 5
+    └── images/modele_flocon.png
 ```
+L'archive **`LIVRABLES_MACROBUS_XXXX.zip`** regroupe les 5 livrables demandés par le sujet.
 
 ## Ordre d'exécution
 0. Installez les outils (`docs/01_INSTALLATION…`).
 1. **Remplacez `XXXX` par votre numéro de groupe** dans les scripts 02 à 06 (Ctrl+H dans SSMS).
 2. Dans SSMS, exécutez **01**, puis **02**, **03** et **04** (touche F5).
 3. Chargez le DWH :
-   - **avec SSIS** (demandé par le sujet) : construisez le package selon `docs/02_GUIDE_SSIS.md`, puis exécutez-le ;
+   - **avec SSIS** (demandé par le sujet) : ajoutez `MACROBUS_ETL_XXXX/Chargement_DWH.dtsx` à un projet Integration Services (voir son `LISEZMOI.md`) et exécutez-le ;
    - **ou en secours** : `EXEC dbo.ps_ChargerDimensions; EXEC dbo.ps_ChargerFaitOrders;`
 4. Exécutez **05** et **06** : les résultats doivent être identiques.
 5. Construisez le rapport Power BI (`docs/03_GUIDE_POWER_BI.md`).

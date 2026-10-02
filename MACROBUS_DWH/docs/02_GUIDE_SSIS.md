@@ -3,6 +3,8 @@
 **Pré-requis** : les scripts `01` (base de production) et `02` (création du DWH, avec `DimDate` déjà remplie) ont été exécutés dans SSMS.
 Si vous voulez une solution de secours pour les dimensions, exécutez aussi le script `03`. Le script `04` (procédure stockée du fait) est **obligatoire**.
 
+> **Un package prêt à l'emploi est fourni** dans `MACROBUS_ETL_XXXX/Chargement_DWH.dtsx`. Il contient des tâches *Exécuter SQL* qui appellent les procédures des scripts 03 et 04 (voir `MACROBUS_ETL_XXXX/LISEZMOI.md`). Ce guide explique comment construire la version **avec des Data Flows**, plus « SSIS », si votre enseignant l'exige.
+
 ## Architecture du package `Chargement_DWH.dtsx`
 
 ```

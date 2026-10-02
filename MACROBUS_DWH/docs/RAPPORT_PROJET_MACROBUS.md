@@ -98,22 +98,7 @@ Nous avons repris le modèle proposé dans le sujet et l'avons **enrichi** avec 
 
 ### 3.4 Schéma en flocon
 
-```mermaid
-erDiagram
-    FaitOrders }o--|| DimDate : "KeyOrderDate / KeyShipperDate / KeyRequiredDate"
-    FaitOrders }o--|| DimProduct : KeyDimProduct
-    DimProduct }o--|| DimProductLine : KeyDimProductLine
-    FaitOrders }o--|| DimFournisseur : keyDimFournisseur
-    FaitOrders }o--|| DimCustomers : KeyDimCustomers
-    DimCustomers }o--|| DimContact : KeyDimContact
-    FaitOrders }o--|| DimEmployees : KeyDimEmployees
-    DimEmployees }o--|| DimOffice : KeyDimOffices
-    FaitOrders }o--|| DimCommerciaux : KeyDimCommerciaux
-    FaitOrders }o--|| DimManagers : KeyDimManagers
-    FaitOrders }o--|| DimGeographieClient : KeyDimGeographieClient
-    FaitOrders }o--|| DimGeographieOffice : KeyDimGeographieOffice
-```
-*(Pour le rendu final, insérez une capture du **diagramme de base de données** généré dans SSMS : clic droit sur « Schémas de base de données », puis « Nouveau schéma », et ajoutez toutes les tables.)*
+![Modèle en flocon du DWH MACROBUS](images/modele_flocon.png)
 
 **Pourquoi un flocon ?** Les hiérarchies Produit → Catégorie, Client → Contact et Employé → Bureau sont normalisées. Cela évite la redondance (la description d'une catégorie n'est stockée qu'une fois), facilite la maintenance des dimensions et répond à la consigne du sujet. L'inconvénient (davantage de jointures) est négligeable vu les volumes.
 
@@ -147,14 +132,16 @@ Volumétrie après chargement :
 
 ## 5. Processus ETL avec SSIS
 
-Projet `MACROBUS_ETL_XXXX`, package `Chargement_DWH.dtsx` (le guide détaillé est dans `02_GUIDE_SSIS.md`).
+Projet `MACROBUS_ETL_XXXX`, package `Chargement_DWH.dtsx` (fourni dans le dossier `MACROBUS_ETL_XXXX`). Le guide `02_GUIDE_SSIS.md` explique aussi comment construire la version avec des Data Flows.
 
 - **Connexions** : `CM_SRC_PROD` (source) et `CM_DWH` (cible), avec le fournisseur OLE DB Driver for SQL Server.
 - **Flux de contrôle** en 3 étapes :
   1. *Conteneur « Dimensions niveau 1 »* : 8 Data Flows parallèles (dimensions sans parent).
   2. *Conteneur « Dimensions niveau 2 »* : DimProduct, DimCustomers et DimEmployees. Elles ont besoin de la clé de leur dimension parente.
   3. *Tâche Exécuter SQL* : `EXEC dbo.ps_ChargerFaitOrders`.
-- **Modèle de Data Flow** : Source OLE DB → (Lookup parent) → Lookup d'existence sur la clé naturelle → sortie *Aucune correspondance* → Destination OLE DB. Seuls les nouveaux membres sont insérés, donc le **chargement est incrémental et rejouable**.
+- **Package fourni** : chaque dimension est chargée par une tâche *Exécuter SQL* qui appelle sa procédure de chargement (script 03, instruction `MERGE` : insertion des nouveaux membres et mise à jour des membres existants, SCD type 1). Les deux conteneurs garantissent l'ordre imposé par le flocon.
+- **Variante avec Data Flows** (guide SSIS) : Source OLE DB → (Lookup parent) → Lookup d'existence sur la clé naturelle → sortie *Aucune correspondance* → Destination OLE DB.
+- Dans les deux cas, le **chargement est incrémental et rejouable**.
 
 *(Insérez ici les captures d'écran du flux de contrôle et d'un flux de données.)*
 
