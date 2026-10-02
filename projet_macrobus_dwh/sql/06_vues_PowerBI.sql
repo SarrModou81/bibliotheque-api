@@ -5,7 +5,7 @@
    Power BI n'autorise qu'UNE relation active entre 2 tables : on expose
    donc 2 vues distinctes, chacune reliee a sa propre cle du fait.
    ===================================================================== */
-USE MACROBUS_DWH_XXXX;
+USE MACROBUS_DWH_2;
 GO
 
 CREATE OR ALTER VIEW dbo.vw_GeoClient AS

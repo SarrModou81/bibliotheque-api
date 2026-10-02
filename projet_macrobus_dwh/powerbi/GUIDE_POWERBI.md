@@ -3,7 +3,7 @@
 ## 1. Importer les données
 
 *Accueil → Obtenir les données → SQL Server* → serveur `localhost` (ou le vôtre), base
-`MACROBUS_DWH_XXXX`, mode **Import**. Cocher :
+`MACROBUS_DWH_2`, mode **Import**. Cocher :
 
 `FaitOrders`, `DimDate`, `DimProduct`, `DimProductLine`, `DimFournisseur`, `DimCustomers`,
 `DimContact`, `DimCommerciaux`, `DimOffice`, `DimManagers`, `vw_GeoClient`, `vw_GeoFiliale`.

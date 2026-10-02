@@ -10,7 +10,7 @@
      - Le territoire / la filiale d'une commande = ceux du bureau
        (office) du commercial qui gere le client.
    ===================================================================== */
-USE MACROBUS;
+USE MACROBUS_PROD;
 GO
 
 /* ---------------------------------------------------------------------

@@ -1,9 +1,9 @@
 /* =====================================================================
-   PROJET MACROBUS - Script 01 : Creation de l'entrepot MACROBUS_DWH_XXXX
+   PROJET MACROBUS - Script 01 : Creation de l'entrepot MACROBUS_DWH_2
    ---------------------------------------------------------------------
-   >>> Remplacer XXXX par votre numero de groupe (Ctrl+H dans SSMS)
-   >>> Si votre base de production ne s'appelle pas MACROBUS, modifier
-       uniquement la section "SYNONYMES" en bas du script.
+   Source : base de production MACROBUS_PROD (script 00)
+   >>> Si votre base de production a un autre nom, modifier uniquement
+       la section "SYNONYMES" en bas du script.
 
    Modele en FLOCON (snowflake) - grain de la table de fait :
        1 ligne = 1 ligne de commande (orderNumber + productCode)
@@ -17,10 +17,10 @@
        DimGeographie : geographie du client / geographie de la filiale
    ===================================================================== */
 
-IF DB_ID('MACROBUS_DWH_XXXX') IS NULL
-    CREATE DATABASE MACROBUS_DWH_XXXX;
+IF DB_ID('MACROBUS_DWH_2') IS NULL
+    CREATE DATABASE MACROBUS_DWH_2;
 GO
-USE MACROBUS_DWH_XXXX;
+USE MACROBUS_DWH_2;
 GO
 
 /* ---------- Nettoyage (permet de relancer le script) ---------------- */
@@ -278,13 +278,13 @@ IF OBJECT_ID('src.products')     IS NOT NULL DROP SYNONYM src.products;
 IF OBJECT_ID('src.orders')       IS NOT NULL DROP SYNONYM src.orders;
 IF OBJECT_ID('src.orderdetails') IS NOT NULL DROP SYNONYM src.orderdetails;
 GO
-CREATE SYNONYM src.offices      FOR MACROBUS.dbo.offices;
-CREATE SYNONYM src.employees    FOR MACROBUS.dbo.employees;
-CREATE SYNONYM src.customers    FOR MACROBUS.dbo.customers;
-CREATE SYNONYM src.productlines FOR MACROBUS.dbo.productlines;
-CREATE SYNONYM src.products     FOR MACROBUS.dbo.products;
-CREATE SYNONYM src.orders       FOR MACROBUS.dbo.orders;
-CREATE SYNONYM src.orderdetails FOR MACROBUS.dbo.orderdetails;
+CREATE SYNONYM src.offices      FOR MACROBUS_PROD.dbo.offices;
+CREATE SYNONYM src.employees    FOR MACROBUS_PROD.dbo.employees;
+CREATE SYNONYM src.customers    FOR MACROBUS_PROD.dbo.customers;
+CREATE SYNONYM src.productlines FOR MACROBUS_PROD.dbo.productlines;
+CREATE SYNONYM src.products     FOR MACROBUS_PROD.dbo.products;
+CREATE SYNONYM src.orders       FOR MACROBUS_PROD.dbo.orders;
+CREATE SYNONYM src.orderdetails FOR MACROBUS_PROD.dbo.orderdetails;
 GO
 
-PRINT 'Entrepot MACROBUS_DWH_XXXX cree avec succes.';
+PRINT 'Entrepot MACROBUS_DWH_2 cree avec succes.';

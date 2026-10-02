@@ -1,22 +1,25 @@
 # Projet MacroBus — Entrepôt de données (guide étape par étape)
 
-> Nomenclature : base **`MACROBUS_DWH_XXXX`**, projet SSIS **`MACROBUS_ETL_XXXX`**
-> (remplacez `XXXX` par votre numéro de groupe dans **tous** les fichiers : Ctrl+H dans SSMS / VS Code).
-> Base de production (source) supposée : **`MACROBUS`**. Elle a la même structure que la base d'exemple
-> *classicmodels* : offices, employees, customers, productlines, products, orders, orderdetails et payments.
+> Nomenclature : base **`MACROBUS_DWH_2`**, projet SSIS **`MACROBUS_ETL_2`**
+> (groupe n° 2). Base de production (source) : **`MACROBUS_PROD`**, créée avec ses données par le script `00`.
+> Elle a la structure de la base d'exemple *classicmodels* : offices, employees, customers, productlines,
+> products, orders, orderdetails et payments.
+>
+> **Démarrage rapide SSIS : voir `ssis/PAS_A_PAS_SSIS.md`.**
 
 ## Contenu du dossier
 
 | Fichier | Rôle | Exigence du sujet |
 |---|---|---|
-| `sql/00_base_production_MACROBUS.sql` | (Optionnel) recrée la base de prod sous SQL Server | — |
+| `sql/00_MACROBUS_PROD_complet.sql` | Crée la base de production **MACROBUS_PROD** avec toutes ses données | — |
 | `sql/01_creation_DWH.sql` | Crée le DWH en flocon (tables, clés, membres « Inconnu », synonymes vers la prod) | A-1, A-4, C-2 |
 | `sql/02_procedures_chargement_dimensions.sql` | Chargement de DimDate + procédures de secours/contrôle des dimensions | A-2 |
 | `sql/03_procedure_chargement_fait.sql` | **Procédure stockée de chargement de FaitOrders** + contrôle | A-3 |
 | `sql/04_requetes_questions_PRODUCTION.sql` | Réponses aux 4 questions sur la prod | B-1, C-3 |
 | `sql/05_requetes_questions_DWH.sql` | Réponses aux 4 questions sur le DWH | B-1, C-3 |
 | `sql/06_vues_PowerBI.sql` | Vues pour la géographie à double rôle dans Power BI | B-2 |
-| `ssis/GUIDE_SSIS.md` | Construction pas à pas du projet SSIS | A-2, C-1 |
+| `ssis/PAS_A_PAS_SSIS.md` | **Clic par clic** : de votre écran actuel au package qui fonctionne | A-2, C-1 |
+| `ssis/GUIDE_SSIS.md` | Référence : requêtes source de toutes les dimensions, package Master | A-2, C-1 |
 | `powerbi/GUIDE_POWERBI.md` | Modèle, mesures DAX et visuels | B-2 |
 | `rapport/PLAN_RAPPORT.md` | Plan détaillé du rapport à rendre | C-4 |
 
@@ -65,8 +68,7 @@ Différences avec le modèle de l'enseignant, à justifier dans le rapport :
 ## Étape 3 — Créer l'entrepôt (C-2)
 
 Dans SSMS :
-1. (Seulement si vous n'avez pas la prod sous SQL Server) exécuter `00_base_production_MACROBUS.sql`, puis
-   importer les données.
+1. Exécuter `00_MACROBUS_PROD_complet.sql` : il crée la base `MACROBUS_PROD` et ses données.
 2. Exécuter `01_creation_DWH.sql`. Si votre base de prod a un autre nom, modifiez **uniquement** la
    section « SYNONYMES » à la fin du script.
 3. Exécuter `02_procedures_chargement_dimensions.sql`, `03_procedure_chargement_fait.sql` et
@@ -129,6 +131,6 @@ Suivre **`powerbi/GUIDE_POWERBI.md`** (modèle, mesures DAX et 4 pages de rappor
 
 ## Étape 8 — Rendre le travail (C)
 
-Suivre **`rapport/PLAN_RAPPORT.md`** et rendre : le projet SSIS `MACROBUS_ETL_XXXX` (dossier zippé), les
+Suivre **`rapport/PLAN_RAPPORT.md`** et rendre : le projet SSIS `MACROBUS_ETL_2` (dossier zippé), les
 scripts `01`, `02`, `03` et `06`, les scripts `04` et `05`, le rapport (PDF) avec captures, le `.pbix` et
 la liste des membres du groupe.

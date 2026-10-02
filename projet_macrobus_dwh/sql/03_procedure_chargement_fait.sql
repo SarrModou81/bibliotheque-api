@@ -17,7 +17,7 @@
                 EXEC dbo.sp_ChargerToutesDimensions).
    Appel      : EXEC dbo.sp_ChargerFaitOrders;
    ===================================================================== */
-USE MACROBUS_DWH_XXXX;
+USE MACROBUS_DWH_2;
 GO
 
 CREATE OR ALTER PROCEDURE dbo.sp_ChargerFaitOrders

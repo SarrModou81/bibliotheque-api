@@ -1,4 +1,4 @@
-# Guide SSIS — projet `MACROBUS_ETL_XXXX`
+# Guide SSIS — projet `MACROBUS_ETL_2`
 
 Outils : **Visual Studio 2019 ou 2022** + extension **SQL Server Integration Services Projects**
 (Extensions → Gérer les extensions → « SQL Server Integration Services Projects »).
@@ -10,7 +10,7 @@ Pré-requis : les scripts `01`, `02`, `03` ont été exécutés (tables, procéd
 ## 1. Créer le projet
 
 1. *Fichier → Nouveau → Projet → **Integration Services Project***.
-2. Nom : **`MACROBUS_ETL_XXXX`**.
+2. Nom : **`MACROBUS_ETL_2`**.
 3. Supprimer `Package.dtsx` (ou le renommer `00_Master.dtsx`).
 
 ## 2. Gestionnaires de connexion de **projet** (partagés par tous les packages)
@@ -19,8 +19,8 @@ Dans l'Explorateur de solutions : clic droit sur **Connection Managers → Nouve
 
 | Nom | Serveur | Base |
 |---|---|---|
-| `CM_Source_MACROBUS` | votre serveur (ex. `localhost` ou `.\SQLEXPRESS`) | `MACROBUS` |
-| `CM_DWH` | idem | `MACROBUS_DWH_XXXX` |
+| `CM_MACROBUS_PROD` | votre serveur (ex. `localhost` ou `.\SQLEXPRESS`) | `MACROBUS_PROD` |
+| `CM_DWH` | idem | `MACROBUS_DWH_2` |
 
 Fournisseur : *Microsoft OLE DB Driver for SQL Server* (ou *SQL Server Native Client 11*). Authentification Windows.
 
@@ -92,7 +92,7 @@ Toutes les dimensions suivent le même schéma :
 
 ---
 
-## 5. Requêtes des OLE DB Source (connexion `CM_Source_MACROBUS`)
+## 5. Requêtes des OLE DB Source (connexion `CM_MACROBUS_PROD`)
 
 ### 02_DimGeographie
 ```sql
@@ -242,5 +242,5 @@ regrouper dans un *Sequence Container* avant le fait.) L'important est que les *
 | *cannot convert between unicode and non-unicode* | Utiliser les requêtes avec `CAST(... AS NVARCHAR)` ci-dessus |
 | *Violation of UNIQUE KEY* | Mauvaise *Business Key* dans le SCD, ou package lancé alors que les données existent : vérifier le mapping |
 | *FOREIGN KEY constraint* | Ordre d'exécution : charger le parent du flocon avant l'enfant, et le fait en dernier |
-| *Invalid object name 'src.orders'* | Synonymes : la base de prod ne s'appelle pas `MACROBUS` → adapter la fin du script 01 |
+| *Invalid object name 'src.orders'* | Synonymes : la base de prod ne s'appelle pas `MACROBUS_PROD` → adapter la fin du script 01 |
 | Lookup : *row yielded no match* | Mettre le Lookup en *Ignore failure* + Derived Column `-1` |

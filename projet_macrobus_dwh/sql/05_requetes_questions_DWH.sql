@@ -1,6 +1,6 @@
 /* =====================================================================
    PROJET MACROBUS - Script 05 : Reponses aux questions (partie B-1)
-   sur l'ENTREPOT  -> MACROBUS_DWH_XXXX
+   sur l'ENTREPOT  -> MACROBUS_DWH_2
    ---------------------------------------------------------------------
    Memes conventions que le script 04 : les resultats doivent etre
    IDENTIQUES a ceux de la production (c'est la validation fonctionnelle).
@@ -8,7 +8,7 @@
    passent toutes par la table de fait et les filtres de periode
    utilisent directement les attributs de DimDate (Trimestre, Semestre).
    ===================================================================== */
-USE MACROBUS_DWH_XXXX;
+USE MACROBUS_DWH_2;
 GO
 
 /* ---------------------------------------------------------------------

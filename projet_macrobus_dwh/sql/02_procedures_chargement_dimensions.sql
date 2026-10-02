@@ -8,7 +8,7 @@
        que les packages SSIS, ce qui permet de verifier vos packages.
    Toutes les dimensions sont gerees en SCD de type 1 (ecrasement).
    ===================================================================== */
-USE MACROBUS_DWH_XXXX;
+USE MACROBUS_DWH_2;
 GO
 
 /* ---------------------------------------------------------------------
